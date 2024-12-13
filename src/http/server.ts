@@ -9,7 +9,7 @@ import { getUsuarioById } from './routes/get-usuario-by-id';
 import { getAutomoveis } from './routes/get-automoveis';
 import { getAutomoveisModalidades } from './routes/get-automoveis-modalidades';
 import { postLogin } from './routes/post-login';
-import { jwtSecret } from '../config/env';
+import { jwtSecret, portApp } from '../config/env';
 import { postLogout } from './routes/post-logout';
 import { authenticateJWT } from './routes/authenticate';
 import { getAllTitulos } from './routes/get-all-titulos';
@@ -99,6 +99,6 @@ app.register(postLogout)
 //     }
 //   }
 
-app.listen({ port: 3333 }).then(() => {
-    console.log('HTTP server running on http://localhost:3333')
+app.listen({ port: portApp, host: '::' }).then(() => {
+    console.log(`HTTP server running on port ${portApp}`)
 })
