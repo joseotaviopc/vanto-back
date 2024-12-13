@@ -1,6 +1,7 @@
 import fastify, { FastifyReply, FastifyRequest } from 'fastify'
 import fjwt, { FastifyJWT } from '@fastify/jwt'
 import fCookie from '@fastify/cookie'
+import cors from '@fastify/cors'
 
 import { status } from './routes/status';
 import { getTitulos } from './routes/get-titulos';
@@ -19,7 +20,12 @@ import { getUsuarioByCpf } from './routes/get-usuario-by-cpf';
 const app = fastify()
 // console.log(authenticateJWT)
 
-
+app.register(cors, {
+    // put your options here
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+})
 // Register JWT and cookie plugins
 app.register(fjwt, { secret: jwtSecret || 'secret' });
 app.register(fCookie, {
