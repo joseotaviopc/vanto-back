@@ -1,4 +1,6 @@
 import { JWT } from '@fastify/jwt'
+import { FastifyBaseLogger, FastifyInstance, RawReplyDefaultExpression, RawRequestDefaultExpression, RawServerDefault } from 'fastify'
+import { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 // adding jwt property to req
 // authenticate property to FastifyInstance
@@ -10,6 +12,14 @@ declare module 'fastify' {
     authenticate: any
   }
 }
+
+export type FastifyTypedInstance = FastifyInstance<
+RawServerDefault,
+RawRequestDefaultExpression,
+RawReplyDefaultExpression,
+FastifyBaseLogger,
+ZodTypeProvider
+>
 
 type UserPayload = {
   id: string
