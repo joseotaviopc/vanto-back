@@ -1,24 +1,29 @@
-import { FastifyInstance } from "fastify";
 import { DatabaseService } from "../../services/database.service";
 import { z } from "zod"
 import { authenticateJWT } from "./authenticate";
+import { FastifyTypedInstance } from "../../types";
 
 // Automoveis endpoint
-export async function getAutomoveis(app: FastifyInstance) {
+export async function getAutomoveisById(app: FastifyTypedInstance) {
     app.get('/automoveis', {
+        schema: {
+            tags: ['Automóveis'],
+            description: 'Get automóveis by user Id',
+            querystring: z.object({
+                page: z.coerce.number().min(1).default(1),
+                limit: z.coerce.number().min(1).default(20),
+                id_usuario: z.coerce.number().min(1).optional(),
+            })
+        },
         preHandler: authenticateJWT,
     }, async (req, res) => {
-        const getAutomoveisParams = z.object({
-            page: z.coerce.number().min(1).default(1),
-            limit: z.coerce.number().min(1).max(100).default(20),
-            search: z.string().optional()
-        })
+        const { page, limit, id_usuario } = req.query
 
-        const { page, limit, search } = getAutomoveisParams.parse(req.params)
+        if (!id_usuario) {
+            return res.status(400).send({ error: "User ID is required" });
+        }
 
-        const response = search
-            ? await DatabaseService.searchAutomoveis(search, page, limit)
-            : await DatabaseService.getAutomoveis(page, limit);
+        const response = await DatabaseService.getAutomoveisById(id_usuario, page, limit);
 
         return response;
     })

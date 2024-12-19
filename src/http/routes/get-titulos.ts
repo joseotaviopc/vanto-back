@@ -1,32 +1,36 @@
-import { FastifyInstance } from "fastify";
 import { DatabaseService } from "../../services/database.service";
 import { z } from "zod"
 import { authenticateJWT } from "./authenticate";
+import { FastifyTypedInstance } from "../../types";
 
 // Titulos endpoint
-export async function getTitulos(app: FastifyInstance) {
+export async function getTitulos(app: FastifyTypedInstance) {
     app.get('/titulos/:userId', {
+        schema: {
+            tags: ['Títulos'],
+            description: 'Get all titulos by userId',
+            params: z.object({
+                userId: z.string().min(1).optional(),
+            }),
+            headers: z.object({
+                authorization: z.string(),
+            }),
+            querystring: z.object({
+                page: z.coerce.number().min(1).default(1),
+                limit: z.coerce.number().min(1).default(20)
+            })
+        },
         preHandler: authenticateJWT,
     }, async (req, res) => {
-        const getTitulosParams = z.object({
-            userId: z.coerce.number().min(1).optional(),
-        })
 
-        const getTitulosQuery = z.object({
-            page: z.coerce.number().min(1).default(1),
-            limit: z.coerce.number().min(1).max(100).default(20)
-        })
-
-        const { userId } = getTitulosParams.parse(req.params)
-        const { page, limit } = getTitulosQuery.parse(req.query)
-
-        console.log({ userId })
+        const { userId } = req.params
+        const { page, limit } = req.query
 
         if (!userId) {
             return res.status(400).send({ error: "User ID is required" });
         }
 
-        const response = await DatabaseService.getTitulos(userId, page, limit);
+        const response = await DatabaseService.getTitulos(Number(userId), page, limit);
 
         return response;
     })

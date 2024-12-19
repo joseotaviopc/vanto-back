@@ -1,16 +1,20 @@
-import { FastifyInstance } from "fastify";
 import { DatabaseService } from "../../services/database.service";
 import { z } from "zod"
+import { FastifyTypedInstance } from "../../types";
 
 // Login endpoint
-export async function postLogin(app: FastifyInstance) {
-    app.post('/login', async (req, res) => {
-        const getLoginParams = z.object({
-            cpf_cnpj: z.string(),
-            data_nascimento: z.string(),
-        })
-
-        const { cpf_cnpj, data_nascimento } = getLoginParams.parse(req.body)
+export async function postLogin(app: FastifyTypedInstance) {
+    app.post('/login', {
+        schema: {
+            tags: ['Autenticação'],
+            description: 'Login user',
+            body: z.object({
+                cpf_cnpj: z.string(),
+                data_nascimento: z.string(),
+            })
+        }
+    }, async (req, res) => {
+        const { cpf_cnpj, data_nascimento } = req.body
 
 
         if (!cpf_cnpj || !data_nascimento) {
@@ -37,7 +41,15 @@ export async function postLogin(app: FastifyInstance) {
             httpOnly: true,
             secure: true,
         })
-        return { accessToken: token, user: { id: user.id_usuario, name: user.nome } }
+        return {
+            accessToken: token, user:
+            {
+                id: user.id_usuario,
+                name: user.nome,
+                cpf_cnpj: user.cpf_cnpj,
+                data_nascimento: user.data_nascimento
+            }
+        }
     }
     )
 }

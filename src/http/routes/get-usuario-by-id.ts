@@ -1,18 +1,21 @@
-import { FastifyInstance } from "fastify";
 import { DatabaseService } from "../../services/database.service";
 import { z } from "zod"
 import { authenticateJWT } from "./authenticate";
+import { FastifyTypedInstance } from "../../types";
 
 // Usuario by CPF endpoint
-export async function getUsuarioById(app: FastifyInstance) {
+export async function getUsuarioById(app: FastifyTypedInstance) {
     app.get('/usuario/:userId', {
+        schema: {
+            tags: ['Usuários'],
+            description: 'Get user by ID',
+            params: z.object({
+                userId: z.coerce.number().min(1).optional(),
+            })
+        },
         preHandler: authenticateJWT,
     }, async (req, res) => {
-        const getUsuarioParams = z.object({
-            userId: z.coerce.number().min(1).optional(),
-        })
-
-        const { userId } = getUsuarioParams.parse(req.params)
+        const { userId } = req.params
 
         if (!userId) {
             return res.status(400).send({ error: "User ID is required" });
