@@ -98,13 +98,13 @@ export class DatabaseService {
     return results[0];
   }
 
-  static async getAutomoveis(page: number, limit: number): Promise<PaginatedResponse<Automovel>> {
+  static async getAutomoveisById(id_usuario: number, page: number, limit: number): Promise<PaginatedResponse<Automovel>> {
     const offset = (page - 1) * limit;
     
     const [results, totalResults] = await Promise.all([
-      query<Automovel[]>('SELECT * FROM view_app_automoveis LIMIT ? OFFSET ?', [limit, offset]),
-      query<[{total: number}]>('SELECT COUNT(*) as total FROM view_app_automoveis')
-    ]);
+      query<Automovel[]>('SELECT * FROM view_app_automoveis WHERE id_usuario = ? LIMIT ? OFFSET ?', [id_usuario, limit, offset]),
+      query<[{total: number}]>('SELECT COUNT(*) as total FROM view_app_automoveis WHERE id_usuario = ?', [id_usuario])
+  ]);
 
     return {
       data: results,
