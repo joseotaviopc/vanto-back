@@ -8,15 +8,20 @@
     "preview": "bun prebuild && node --env-file=.env ./dist/http/server.js",
     "prebuild": "bunx tsc --outDir ./dist",
     "dev": "tsx watch --env-file=.env src/http/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest --watch --api 3300",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "2.1.8",
+    "@vitest/ui": "^2.1.8",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
