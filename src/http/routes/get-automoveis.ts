@@ -12,7 +12,7 @@ export async function getAutomoveisById(app: FastifyTypedInstance) {
             querystring: z.object({
                 page: z.coerce.number().min(1).default(1),
                 limit: z.coerce.number().min(1).default(20),
-                id_usuario: z.coerce.number().min(1).optional(),
+                id_usuario: z.coerce.number().optional(),
             })
         },
         preHandler: authenticateJWT,

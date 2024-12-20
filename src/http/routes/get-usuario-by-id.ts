@@ -10,7 +10,7 @@ export async function getUsuarioById(app: FastifyTypedInstance) {
             tags: ['Usuários'],
             description: 'Get user by ID',
             params: z.object({
-                userId: z.coerce.number().min(1).optional(),
+                userId: z.coerce.number().optional(),
             })
         },
         preHandler: authenticateJWT,

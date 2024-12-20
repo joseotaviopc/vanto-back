@@ -22,7 +22,6 @@ export async function postLogin(app: FastifyTypedInstance) {
         }
 
         const user = await DatabaseService.authenticateUser(cpf_cnpj, data_nascimento);
-
         if (!user) {
             return res.status(401).send({ error: "Invalid credentials" });
         }
@@ -42,7 +41,8 @@ export async function postLogin(app: FastifyTypedInstance) {
             secure: true,
         })
         return {
-            accessToken: token, user:
+            accessToken: token,
+            user:
             {
                 id: user.id_usuario,
                 name: user.nome,

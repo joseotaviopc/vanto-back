@@ -22,6 +22,6 @@ export async function getUsuarioByCpf(app: FastifyTypedInstance) {
         }
         
         const response = await DatabaseService.getUsuarioByCpf(cpf);
-        return response;
+        return res.status(200).send(response);
     })
 }

@@ -10,7 +10,7 @@ export async function getTitulos(app: FastifyTypedInstance) {
             tags: ['Títulos'],
             description: 'Get all titulos by userId',
             params: z.object({
-                userId: z.string().min(1).optional(),
+                userId: z.string().optional(),
             }),
             headers: z.object({
                 authorization: z.string(),

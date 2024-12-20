@@ -11,6 +11,6 @@ export async function postLogout(app: FastifyTypedInstance) {
         preHandler: authenticateJWT 
     }, (req: FastifyRequest, reply: FastifyReply) => {
         reply.clearCookie('access_token')
-        return reply.send({ message: 'Logout successful' })
+        return reply.status(200).send({ message: 'Logout successful' })
     })
 }
