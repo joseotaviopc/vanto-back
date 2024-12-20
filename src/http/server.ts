@@ -74,3 +74,5 @@ app.get('*', ((req, res) => {
 app.listen({ port: portApp, host: '::' }).then(() => {
     console.log(`HTTP server running on port ${portApp}`)
 })
+
+export { app }
