@@ -1,5 +1,5 @@
 import { query } from "../config/database";
-import { Titulo, Usuario, Automovel, AutomovelModalidade, PaginatedResponse } from "../types/index";
+import { Titulo, Usuario, Automovel, AutomovelModalidade, PaginatedResponse, TitulosByUser } from "../types/index";
 
 export class DatabaseService {
   static async getAllTitulos(page: number, limit: number): Promise<PaginatedResponse<Titulo>> {
@@ -21,7 +21,7 @@ export class DatabaseService {
     };
   }
 
-  static async getAllTitulosGroupedByUser(page: number, limit: number): Promise<PaginatedResponse<Titulo>> {
+  static async getAllTitulosGroupedByUser(page: number, limit: number): Promise<PaginatedResponse<TitulosByUser>> {
     const offset = (page - 1) * limit;
 
     // const [results, totalResults] = await Promise.all([
@@ -29,7 +29,7 @@ export class DatabaseService {
     //   query<[{total: number}]>('SELECT COUNT(DISTINCT id_usuario) as total FROM view_app_titulos', [])
     // ]);
     const [results, totalResults] = await Promise.all([
-      query<Titulo[]>('SELECT id_usuario, COUNT(*) as titulo_count FROM view_app_titulos GROUP BY id_usuario ORDER BY titulo_count DESC LIMIT ? OFFSET ?', [limit, offset]),
+      query<TitulosByUser[]>('SELECT id_usuario, COUNT(*) as titulo_count FROM view_app_titulos GROUP BY id_usuario ORDER BY titulo_count DESC LIMIT ? OFFSET ?', [limit, offset]),
       query<[{total: number}]>('SELECT COUNT(DISTINCT id_usuario) as total FROM view_app_titulos', [])
     ]);
 
