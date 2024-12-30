@@ -9,6 +9,7 @@ export async function getUsuarioById(app: FastifyTypedInstance) {
         schema: {
             tags: ['Usuários'],
             description: 'Get user by ID',
+            security: [{ bearerAuth: [] }],
             params: z.object({
                 userId: z.coerce.number().optional(),
             })

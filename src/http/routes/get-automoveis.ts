@@ -9,6 +9,7 @@ export async function getAutomoveisById(app: FastifyTypedInstance) {
         schema: {
             tags: ['Automóveis'],
             description: 'Get automóveis by user Id',
+            security: [{ bearerAuth: [] }],
             querystring: z.object({
                 page: z.coerce.number().min(1).default(1),
                 limit: z.coerce.number().min(1).default(20),

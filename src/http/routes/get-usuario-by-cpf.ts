@@ -9,6 +9,7 @@ export async function getUsuarioByCpf(app: FastifyTypedInstance) {
         schema: {
             tags: ['Usuários'],
             description: 'Get user by Cpf',
+            security: [{ bearerAuth: [] }],
             querystring: z.object({
                 cpf: z.string().optional(),
             })
