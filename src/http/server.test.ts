@@ -42,15 +42,18 @@ describe('Login route', () => {
         expect(response.payload).toBe('{"error":"Invalid credentials"}')
     })
 
-    test.skip('POST /login should return accessToken and user data if user found', async () => {
+    test('POST /login should return accessToken and user data if user found', async () => {
         const response = await app.inject({
             method: 'POST',
             url: '/login',
             body: {
                 cpf_cnpj: '24892360597',
-                data_nascimento: '20/01/1962'
-            }
+                data_nascimento: '1962-01-20'
+            },
+
         })
+
+        console.log(response.raw.req)
 
         expect(response.statusCode).toBe(200)
 
