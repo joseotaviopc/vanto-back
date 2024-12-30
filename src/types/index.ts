@@ -105,3 +105,8 @@ export interface LoginRequestBody {
   cpf_cnpj: string;
   data_nascimento: string;
 }
+
+export interface TitulosByUser {
+  id_usuario: number;
+  titulo_count: number;
+}
