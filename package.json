@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bun prebuild && node ./dist/src/http/server.js",
+    "start": "bun test && bun prebuild && node ./dist/src/http/server.js",
     "preview": "bun prebuild && node --env-file=.env ./dist/src/http/server.js",
     "prebuild": "bunx tsc --outDir ./dist",
-    "dev": "tsx watch --env-file=.env src/http/server.ts",
-    "test": "vitest --watch --api 3300",
+    "dev:old": "tsx watch --env-file=.env src/http/server.ts",
+    "dev": "nodemon --exec \"ts-node -r dotenv/config src/http/server.ts\"",
+    "test": "vitest --api 3300",
+    "test:watch": "vitest --watch --api 3300",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
@@ -19,6 +21,7 @@
     "@types/node": "^22.10.2",
     "@vitest/coverage-v8": "2.1.8",
     "@vitest/ui": "^2.1.8",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
@@ -26,13 +29,16 @@
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
     "@fastify/cors": "^10.0.1",
+    "@fastify/helmet": "^13.0.0",
     "@fastify/jwt": "^9.0.1",
+    "@fastify/rate-limit": "^10.2.1",
     "@fastify/swagger": "^9.4.0",
     "@fastify/swagger-ui": "^5.2.0",
     "@types/mysql": "^2.15.26",
     "fastify": "^5.1.0",
     "fastify-type-provider-zod": "^4.0.2",
     "mysql": "^2.18.1",
+    "neverthrow": "^8.1.1",
     "zod": "^3.24.1"
   }
 }
