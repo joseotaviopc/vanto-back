@@ -442,7 +442,6 @@ describe('Automóveis by Id route', () => {
             })
 
             const responseParsed = JSON.parse(response.body).data[0]
-            console.log(responseParsed)
 
             expect(responseParsed).toBeInstanceOf(Object)
             expect(responseParsed).toHaveProperty('id_automovel')
