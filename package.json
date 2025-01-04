@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bun test && bun prebuild && node ./dist/src/http/server.js",
+    "start": "bun prebuild && node ./dist/src/http/server.js",
     "preview": "bun prebuild && node --env-file=.env ./dist/src/http/server.js",
     "prebuild": "bunx tsc --outDir ./dist",
     "dev:old": "tsx watch --env-file=.env src/http/server.ts",
