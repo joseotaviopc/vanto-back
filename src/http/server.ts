@@ -103,7 +103,7 @@ app.register(fjwt, {
       signed: true,
     },
     sign: {
-      expiresIn: '30m'
+      expiresIn: '120m'
     }
 });
 
