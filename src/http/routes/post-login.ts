@@ -61,7 +61,7 @@ export async function postLogin(app: FastifyTypedInstance) {
                 httpOnly: true,
                 sameSite: true
             })
-            return {
+            return res.status(200).send({
                 accessToken: token,
                 user:
                 {
@@ -70,7 +70,7 @@ export async function postLogin(app: FastifyTypedInstance) {
                     cpf_cnpj: user.cpf_cnpj,
                     data_nascimento: user.data_nascimento
                 }
-            }
+            })
         }
     )
 }

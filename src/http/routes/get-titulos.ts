@@ -22,8 +22,8 @@ export async function getTitulos(app: FastifyTypedInstance) {
                 200: z.object({
                     data: z.array(z.object({
                         id_titulo: z.number(),
-                        vencimento: z.union([z.string().nullable(),z.date().nullable()]),
-                        pagamento: z.null(),
+                        vencimento: z.union([z.string().nullable(), z.date().nullable()]),
+                        pagamento: z.union([z.string().nullable(), z.date().nullable()]),
                         id_usuario: z.number(),
                         id_automovel: z.number(),
                         cpf_cnpj: z.string(),

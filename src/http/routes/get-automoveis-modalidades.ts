@@ -1,10 +1,10 @@
-import { FastifyInstance } from "fastify";
 import { DatabaseService } from "../../services/database.service";
 import { z } from "zod"
 import { authenticateJWT } from "./authenticate";
+import { FastifyTypedInstance } from "../../types";
 
 // Automoveis-modalidade endpoint
-export async function getAutomoveisModalidades(app: FastifyInstance) {
+export async function getAutomoveisModalidades(app: FastifyTypedInstance) {
     app.get('/automoveis-modalidade', {
         schema: {
             tags: ['Automóveis'],
@@ -18,14 +18,13 @@ export async function getAutomoveisModalidades(app: FastifyInstance) {
         },
         preHandler: authenticateJWT,
     }, async (req, res) => {
-        const getAutomoveisModalidadesParams = z.object({
-            page: z.coerce.number().min(1).default(1),
-            limit: z.coerce.number().min(1).max(100).default(20),
-        })
+        const { page, limit, id_usuario } = req.query
 
-        const { page, limit } = getAutomoveisModalidadesParams.parse(req.params)
+        if (!id_usuario) {
+            return res.status(400).send({ error: "User ID is required" });
+        }
 
-        const response = await DatabaseService.getAutomoveisModalidade(page, limit);
+        const response = await DatabaseService.getAutomoveisModalidadeById(id_usuario, page, limit);
         return response;
     })
 }

@@ -16,16 +16,17 @@ export async function getAllTitulosGroupedByUser(app: FastifyTypedInstance) {
             }),
             response: {
                 200: z.object({
-                    data: z.array(z.object({
-                        id_usuario: z.number(),
-                        titulo_count: z.number(),
-                    })),
-                    pagination: z.object({
-                        total: z.number(),
-                        page: z.number(),
-                        limit: z.number(),
-                        totalPages: z.number(),
-                    }),
+                    data: z.any(),
+                    // data: z.array(z.object({
+                    //     id_usuario: z.number(),
+                    //     titulo_count: z.number(),
+                    // })),
+                    // pagination: z.object({
+                    //     total: z.number(),
+                    //     page: z.number(),
+                    //     limit: z.number(),
+                    //     totalPages: z.number(),
+                    // }),
                 }).describe('OK'),
                 400: z.object({
                     error: z.string(),
