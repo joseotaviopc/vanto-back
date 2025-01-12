@@ -107,6 +107,6 @@ export interface LoginRequestBody {
 }
 
 export interface TitulosByUser {
-  id_usuario: number;
-  titulo_count: number;
+    id_contrato: number;
+    titulos: Titulo[];
 }
