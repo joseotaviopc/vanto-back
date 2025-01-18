@@ -1,8 +1,10 @@
+require('dotenv').config();
 import fastify from 'fastify'
 import fjwt from '@fastify/jwt'
 import fCookie from '@fastify/cookie'
 import cors from '@fastify/cors'
 import { validatorCompiler, serializerCompiler, ZodTypeProvider, jsonSchemaTransform } from 'fastify-type-provider-zod'
+import { fastifyHttpProxy } from '@fastify/http-proxy'
 
 import { status } from './routes/status';
 import { getTitulos } from './routes/get-titulos';
@@ -105,6 +107,11 @@ app.register(fjwt, {
     sign: {
       expiresIn: '120m'
     }
+});
+
+app.register(fastifyHttpProxy, {
+    upstream: 'https://s3.us-east-2.amazonaws.com/arriel-store-boletos', // Your S3 bucket URL
+    prefix: '/pdf', // This will be the prefix for the proxy
 });
 
 app.register(fCookie);
