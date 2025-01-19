@@ -1,4 +1,3 @@
-require('dotenv').config();
 import fastify from 'fastify'
 import fjwt from '@fastify/jwt'
 import fCookie from '@fastify/cookie'
