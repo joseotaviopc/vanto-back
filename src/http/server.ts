@@ -149,7 +149,7 @@ app.get('*', ((req, res) => {
     res.status(404).send(Result.fail("The requested resource could not be found."));
 }));
 
-app.listen({ port: portApp, host: '0.0.0.0' }).then((host) => {
+app.listen({ port: portApp }).then((host) => {
     console.log(`HTTP server running on ${host}`)
 })
 
